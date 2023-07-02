@@ -29,26 +29,26 @@ public class ResizeHelper {
         resizeListener.setMaxWidth(maxWidth);
         resizeListener.setMaxHeight(maxHeight);
 
-        ObservableList<Node> children = stage.getScene().getRoot().getChildrenUnmodifiable();
-        for (Node child : children) {
-            addListenerDeeply(child, resizeListener);
-        }
+//        ObservableList<Node> children = stage.getScene().getRoot().getChildrenUnmodifiable();
+//        for (Node child : children) {
+//            addListenerDeeply(child, resizeListener);
+//        }
     }
 
-    private static void addListenerDeeply(Node node, EventHandler<MouseEvent> listener) {
-        node.addEventHandler(MouseEvent.MOUSE_MOVED, listener);
-        node.addEventHandler(MouseEvent.MOUSE_PRESSED, listener);
-        node.addEventHandler(MouseEvent.MOUSE_DRAGGED, listener);
-        node.addEventHandler(MouseEvent.MOUSE_EXITED, listener);
-        node.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET, listener);
-        if (node instanceof Parent) {
-            Parent parent = (Parent) node;
-            ObservableList<Node> children = parent.getChildrenUnmodifiable();
-            for (Node child : children) {
-                addListenerDeeply(child, listener);
-            }
-        }
-    }
+//    private static void addListenerDeeply(Node node, EventHandler<MouseEvent> listener) {
+//        node.addEventHandler(MouseEvent.MOUSE_MOVED, listener);
+//        node.addEventHandler(MouseEvent.MOUSE_PRESSED, listener);
+//        node.addEventHandler(MouseEvent.MOUSE_DRAGGED, listener);
+//        node.addEventHandler(MouseEvent.MOUSE_EXITED, listener);
+//        node.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET, listener);
+//        if (node instanceof Parent) {
+//            Parent parent = (Parent) node;
+//            ObservableList<Node> children = parent.getChildrenUnmodifiable();
+//            for (Node child : children) {
+//                addListenerDeeply(child, listener);
+//            }
+//        }
+//    }
 
     static class ResizeListener implements EventHandler<MouseEvent> {
         private Stage stage;
@@ -158,16 +158,16 @@ public class ResizeHelper {
                 }
             }
 
-            if (MouseEvent.MOUSE_PRESSED.equals(mouseEventType) && Cursor.DEFAULT.equals(cursorEvent)) {
-                resizing = false;
-                screenOffsetX = stage.getX() - mouseEvent.getScreenX();
-                screenOffsetY = stage.getY() - mouseEvent.getScreenY();
-            }
-
-            if (MouseEvent.MOUSE_DRAGGED.equals(mouseEventType) && Cursor.DEFAULT.equals(cursorEvent) && resizing == false) {
-                stage.setX(mouseEvent.getScreenX() + screenOffsetX);
-                stage.setY(mouseEvent.getScreenY() + screenOffsetY);
-            }
+//            if (MouseEvent.MOUSE_PRESSED.equals(mouseEventType) && Cursor.DEFAULT.equals(cursorEvent)) {
+//                resizing = false;
+//                screenOffsetX = stage.getX() - mouseEvent.getScreenX();
+//                screenOffsetY = stage.getY() - mouseEvent.getScreenY();
+//            }
+//
+//            if (MouseEvent.MOUSE_DRAGGED.equals(mouseEventType) && Cursor.DEFAULT.equals(cursorEvent) && resizing == false) {
+//                stage.setX(mouseEvent.getScreenX() + screenOffsetX);
+//                stage.setY(mouseEvent.getScreenY() + screenOffsetY);
+//            }
 
         }
 
@@ -183,5 +183,8 @@ public class ResizeHelper {
             stage.setHeight(height);
         }
 
+        public int getBorder() {
+            return border;
+        }
     }
 }
