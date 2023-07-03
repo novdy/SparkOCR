@@ -16,6 +16,12 @@
     -fx-background-color: #555555;
 }
 
+.mid-vert {
+    -fx-border-style: solid hidden solid hidden;
+    -fx-border-color: #555555;
+    -fx-border-width: 3 0 3 0;
+}
+
 #buttons {
     -fx-border-style: hidden hidden hidden solid;
     -fx-border-color: #555555;

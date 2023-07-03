@@ -36,6 +36,7 @@ public class App extends Application {
         Button cropButton = new Button("C");
         closeButton.setMaxWidth(Double.MAX_VALUE);;
         settingsButton.setMaxWidth(Double.MAX_VALUE);
+        settingsButton.getStyleClass().add("mid-vert");
         cropButton.setMaxWidth(Double.MAX_VALUE);
         cropButton.setPrefHeight(10000);
 
@@ -58,7 +59,7 @@ public class App extends Application {
         GridPane.setHgrow(content, Priority.SOMETIMES);
         GridPane.setVgrow(buttons, Priority.ALWAYS);
 
-        Scene scene = new Scene(root, 960, 270);
+        Scene scene = new Scene(root, 916, 200);
 
 //        scene.getStylesheets().add(Paths.get(resourcePath.toString(), "general.css").toUri().toString());
         scene.getStylesheets().add(getClass().getResource("/general.css").toExternalForm());
