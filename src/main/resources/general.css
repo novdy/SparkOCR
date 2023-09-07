@@ -14,16 +14,18 @@
 
 .button:hover {
     -fx-background-color: #555555;
+    -fx-cursor: default;
 }
 
-.mid-vert {
-    -fx-border-style: solid hidden solid hidden;
+.bottom-border {
+    -fx-border-style: solid;
     -fx-border-color: #555555;
-    -fx-border-width: 3 0 3 0;
+    -fx-border-width: 0 0 3 0;
 }
 
-#buttons {
-    -fx-border-style: hidden hidden hidden solid;
+#controls {
+    -fx-background-color: #555555;
+    -fx-border-style: solid;
     -fx-border-color: #555555;
     -fx-border-width: 0 0 0 3;
 }

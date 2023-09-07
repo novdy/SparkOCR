@@ -15,6 +15,8 @@ public class TransparentPane extends GridPane {
         getStyleClass().add("grid");
 
         setOnMousePressed(mouseEvent -> {
+//            System.out.println(stage.getX());
+//            System.out.println(stage.getY());
             mouseAnchorX = mouseEvent.getScreenX() - stage.getX();
             mouseAnchorY = mouseEvent.getScreenY() - stage.getY();
             anchorWidth = stage.getWidth();
