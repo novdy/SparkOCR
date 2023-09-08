@@ -4,8 +4,6 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.event.EventType;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -54,7 +52,7 @@ public class ResizeHelper {
         private Stage stage;
         private Cursor cursorEvent = Cursor.DEFAULT;
         private boolean resizing = true;
-        private int border = 4;
+        private int border = 5;
         private double startX = 0;
         private double startY = 0;
         private double screenOffsetX = 0;
