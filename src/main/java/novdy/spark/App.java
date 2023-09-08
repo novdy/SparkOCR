@@ -7,6 +7,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.util.ArrayList;
+
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class App extends Application {
@@ -16,6 +18,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
+
+
         stage.initStyle(StageStyle.TRANSPARENT);
         ControlsController controlsController = new ControlsController(stage);
 

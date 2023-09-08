@@ -30,6 +30,10 @@ import java.util.List;
 public final class ControlsController {
     Stage stage;
     Robot robot;
+    // List of all hiragana used in furigana
+    public static final String hiraganaList = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわを" +
+            "がぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽ" +
+            "んゃゅょっ ";
 
     public ControlsController(Stage stage){
         this.stage = stage;
@@ -91,12 +95,14 @@ public final class ControlsController {
 //                    System.out.format("Position : %s%n", annotation.getBoundingPoly());
 //                }
 
-                String text = res.getFullTextAnnotation().getText();
-                StringSelection selection = new StringSelection(text);
+                // returns text passage with line breaks
+                String passage = res.getFullTextAnnotation().getText();
+                // removes furigana representation from the passage and removes line breaks
+                passage = stripFurigana(passage);
+                // adds content to clipboard for easy pasting
+                StringSelection selection = new StringSelection(passage);
                 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
                 clipboard.setContents(selection, selection);
-
-                System.out.format("Text:%n%s%n", text);
             }
 
             vision.close();
@@ -105,5 +111,29 @@ public final class ControlsController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    // Basic Furigana Stripping Method
+    //   strips all furigana and removes newline characters for easy pasting and flashcard creation
+    //   always preserves the last line since it might be short and only have hiragana words
+    //   produces an incorrect copy when there is a line of pure hiragana with no punctuation in the passage
+    //    or when there is irregular furigana such as katakana for stylization
+    private String stripFurigana(String passage){
+        String[] lines = passage.split("\n");
+        StringBuilder cleanedPassage = new StringBuilder();
+
+        for(int i = 0; i < lines.length - 1; i++){
+            String line = lines[i];
+            for(int j = 0; j < line.length(); j++){
+                if(hiraganaList.indexOf(line.charAt(j)) == -1){
+                    cleanedPassage.append(line);
+                    break;
+                }
+            }
+        }
+        cleanedPassage.append(lines[lines.length - 1]);
+
+        // replaces English exclamation point with Japanese equivalent
+        return cleanedPassage.toString().replace("!","！");
     }
 }
