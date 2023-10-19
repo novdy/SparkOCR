@@ -1,5 +1,7 @@
 package novdy.spark;
 
+import io.grpc.LoadBalancerRegistry;
+import io.grpc.internal.PickFirstLoadBalancerProvider;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
@@ -16,6 +18,11 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) {
+        LoadBalancerRegistry.getDefaultRegistry().register(new PickFirstLoadBalancerProvider());
+
+        String projectPath = System.getProperty("user.dir");
+        System.out.println(projectPath);
+
         stage.initStyle(StageStyle.TRANSPARENT);
         ControlsController controlsController = new ControlsController(stage);
 

@@ -13,9 +13,9 @@ public class Controls extends VBox {
         setId("controls");
 
         Button closeButton = new Button("X");
-        Button settingsButton = new Button("S");
-        Button captureButton = new Button("C");
-        Button grabButton = new Button("G");
+        Button settingsButton = new Button("_S");
+        Button captureButton = new Button("_C");
+        Button grabButton = new Button("_G");
 
         closeButton.setMaxWidth(Double.MAX_VALUE);
         closeButton.getStyleClass().add("bottom-border");

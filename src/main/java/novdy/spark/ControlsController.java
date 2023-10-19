@@ -22,14 +22,18 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 public final class ControlsController {
     Stage stage;
     Robot robot;
+    Instant timeSinceLastCapture;
+    String capturedText;
+    final long cooldown = 10000;
     // List of all hiragana used in furigana
     public static final String hiraganaList = "あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわを" +
             "がぎぐげござじずぜぞだぢづでどばびぶべぼぱぴぷぺぽ" +
@@ -38,6 +42,8 @@ public final class ControlsController {
     public ControlsController(Stage stage){
         this.stage = stage;
         robot = new Robot();
+        this.timeSinceLastCapture = Instant.now();
+        capturedText = "";
     }
 
     public void addCloseOperation(Button button){
@@ -58,7 +64,8 @@ public final class ControlsController {
 
         try {
             // create and save file
-            File captureFile = new File(getClass().getResource("/").toURI());
+//            File captureFile = new File(getClass().getResource("/").toURI());
+            File captureFile = new File(System.getProperty("user.dir"));
             captureFile = new File(captureFile, "capture.png");
             ImageIO.write(
                     SwingFXUtils.fromFXImage(capture, null),
@@ -90,24 +97,16 @@ public final class ControlsController {
                     return;
                 }
 
-//                for (EntityAnnotation annotation : res.getTextAnnotationsList()) {
-//                    System.out.format("Text: %s%n", annotation.getDescription());
-//                    System.out.format("Position : %s%n", annotation.getBoundingPoly());
-//                }
-
                 // returns text passage with line breaks
                 String passage = res.getFullTextAnnotation().getText();
+
                 // removes furigana representation from the passage and removes line breaks
                 passage = stripFurigana(passage);
-                // adds content to clipboard for easy pasting
-                StringSelection selection = new StringSelection(passage);
-                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                clipboard.setContents(selection, selection);
+
+                storeAndAddToClipboard(passage);
             }
 
             vision.close();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -133,7 +132,23 @@ public final class ControlsController {
         }
         cleanedPassage.append(lines[lines.length - 1]);
 
-        // replaces English exclamation point with Japanese equivalent
-        return cleanedPassage.toString().replace("!","！");
+        // replaces English exclamation point and question mark with Japanese equivalent
+        return cleanedPassage.toString().replace("!","！").replace("?","？");
+    }
+
+    private void storeAndAddToClipboard(String passage){
+        // adds text in succession to previous capture (possibly multiple times)
+        // if triggered within the cooldown
+        if(Duration.between(timeSinceLastCapture, Instant.now()).toMillis() < cooldown){
+            capturedText += "\n\n" + passage;
+        } else {
+            capturedText = passage;
+        }
+        timeSinceLastCapture = Instant.now();
+
+        // adds content to clipboard for easy pasting
+        StringSelection selection = new StringSelection(capturedText);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(selection, selection);
     }
 }
