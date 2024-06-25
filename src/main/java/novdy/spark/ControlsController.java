@@ -55,10 +55,15 @@ public final class ControlsController {
     }
 
     private void imageCapture(){
+
+
         WritableImage capture = new WritableImage((int)stage.getWidth(), (int)stage.getHeight());
         Node content = stage.getScene().getRoot().getChildrenUnmodifiable().get(0);
-        final double x = stage.getX() + content.getLayoutX(), y = stage.getY() + content.getLayoutY(),
-            width = content.getBoundsInParent().getWidth(), height = content.getBoundsInParent().getHeight() - 1;
+        final double x = stage.getX() + content.getLayoutX(),
+                y = stage.getY() + content.getLayoutY(),
+                width = content.getBoundsInParent().getWidth(),
+                // I use stage.getHeight() since the bounds height has a minimum accounting for the button heights
+                height = stage.getHeight() - 7;
 
         capture = robot.getScreenCapture(capture, x, y, width, height);
 
@@ -100,8 +105,12 @@ public final class ControlsController {
                 // returns text passage with line breaks
                 String passage = res.getFullTextAnnotation().getText();
 
-                // removes furigana representation from the passage and removes line breaks
-                passage = stripFurigana(passage);
+//                // removes furigana representation from the passage and removes line breaks
+//                passage = stripFurigana(passage);
+                passage = removeNewlines(passage);
+
+                // replaces English exclamation point and question mark with Japanese equivalent
+                passage = passage.replace("!","！").replace("?","？");
 
                 storeAndAddToClipboard(passage);
             }
@@ -131,9 +140,23 @@ public final class ControlsController {
             }
         }
         cleanedPassage.append(lines[lines.length - 1]);
+        return cleanedPassage.toString();
+    }
 
-        // replaces English exclamation point and question mark with Japanese equivalent
-        return cleanedPassage.toString().replace("!","！").replace("?","？");
+    private String removeNewlines(String passage){
+        String[] lines = passage.split("\n");
+        StringBuilder cleanedPassage = new StringBuilder();
+
+        for(String line : lines){
+            cleanedPassage.append(line);
+        }
+
+//        for(int i = 0; i < lines.length - 1; i++){
+//            String line = lines[i];
+//            cleanedPassage.append(line);
+//        }
+//        cleanedPassage.append(lines[lines.length - 1]);
+        return cleanedPassage.toString();
     }
 
     private void storeAndAddToClipboard(String passage){

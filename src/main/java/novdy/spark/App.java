@@ -3,9 +3,11 @@ package novdy.spark;
 import io.grpc.LoadBalancerRegistry;
 import io.grpc.internal.PickFirstLoadBalancerProvider;
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -19,9 +21,6 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         LoadBalancerRegistry.getDefaultRegistry().register(new PickFirstLoadBalancerProvider());
-
-        String projectPath = System.getProperty("user.dir");
-        System.out.println(projectPath);
 
         stage.initStyle(StageStyle.TRANSPARENT);
         ControlsController controlsController = new ControlsController(stage);
@@ -37,7 +36,9 @@ public class App extends Application {
         GridPane.setHgrow(content, Priority.SOMETIMES);
         GridPane.setVgrow(controls, Priority.ALWAYS);
 
-        Scene scene = new Scene(root, 916, 138);
+        Rectangle2D primaryScreen = Screen.getPrimary().getBounds();
+//        Scene scene = new Scene(root, primaryScreen.getWidth() / 2.8, primaryScreen.getHeight() / 10.3);
+        Scene scene = new Scene(root, primaryScreen.getWidth() / 2.5, primaryScreen.getHeight() / 10.3);
 
 //        scene.getStylesheets().add(Paths.get(resourcePath.toString(), "general.css").toUri().toString());
         scene.getStylesheets().add(getClass().getResource("/general.css").toExternalForm());
