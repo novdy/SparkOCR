@@ -27,7 +27,8 @@ public class Controls extends VBox {
         //grabButton.setPrefHeight(10000);
 
         controller.addCloseOperation(closeButton);
-        controller.addImageCaptureOperation(captureButton);
+        controller.addContentCaptureOperation(captureButton);
+        controller.addScreenGrabOperation(grabButton);
 
 //        for(int i = 0; i < 40; i++){
 //            content.getChildren().add(new Button("テスト"));
