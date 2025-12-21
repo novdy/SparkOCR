@@ -37,8 +37,9 @@ public class App extends Application {
         GridPane.setVgrow(controls, Priority.ALWAYS);
 
         Rectangle2D primaryScreen = Screen.getPrimary().getBounds();
-//        Scene scene = new Scene(root, primaryScreen.getWidth() / 2.8, primaryScreen.getHeight() / 10.3);
-        Scene scene = new Scene(root, primaryScreen.getWidth() / 2.5, primaryScreen.getHeight() / 10.3);
+        //default
+//        Scene scene = new Scene(root, primaryScreen.getWidth() / 2.5, primaryScreen.getHeight() / 10.3);
+        Scene scene = new Scene(root, primaryScreen.getWidth() / 1.9, primaryScreen.getHeight() / 5.7);
 
 //        scene.getStylesheets().add(Paths.get(resourcePath.toString(), "general.css").toUri().toString());
         scene.getStylesheets().add(getClass().getResource("/general.css").toExternalForm());

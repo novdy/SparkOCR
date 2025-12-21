@@ -194,8 +194,8 @@ public final class ControlsController {
                 String passage = res.getFullTextAnnotation().getText();
 
                 // removes furigana representation from the passage and removes line breaks
-//                passage = stripFurigana(passage);
-                passage = removeNewlines(passage);
+                passage = stripFurigana(passage);
+//                passage = removeNewlines(passage);
 
                 // replaces English exclamation point and question mark with Japanese equivalent
                 passage = passage.replace("!","！").replace("?","？");
